@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dart Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23e63946'/%3E%3Ccircle cx='50' cy='50' r='30' fill='%23f1faee'/%3E%3Ccircle cx='50' cy='50' r='14' fill='%23e63946'/%3E%3Ccircle cx='50' cy='50' r='5' fill='%23264653'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <header>
+    <h1>🎯 Dart Tracker</h1>
+    <p class="tagline">Open a scorecard with its password, or start a new one.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Open a scorecard</h2>
+      <form id="openForm" class="grid-form">
+        <label>Password
+          <input type="password" id="openPw" required autocomplete="off" />
+        </label>
+        <button type="submit">Open</button>
+        <p id="openMsg" class="msg"></p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>New scorecard</h2>
+      <form id="createForm" class="grid-form">
+        <label>Name
+          <input type="text" id="newName" required maxlength="40" placeholder="e.g. Team darts 2026" />
+        </label>
+        <label>Password (min 4 characters)
+          <input type="password" id="newPw" required minlength="4" autocomplete="off" />
+        </label>
+        <button type="submit">Create</button>
+        <p id="createMsg" class="msg"></p>
+      </form>
+      <p class="muted">Scorecards aren't listed anywhere — anyone with the password can open this one, and there's no way to recover a forgotten password, so pick something you'll remember and share it with your group.</p>
+    </section>
+  </main>
+
+  <script type="module" src="login.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dart Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23e63946'/%3E%3Ccircle cx='50' cy='50' r='30' fill='%23f1faee'/%3E%3Ccircle cx='50' cy='50' r='14' fill='%23e63946'/%3E%3Ccircle cx='50' cy='50' r='5' fill='%23264653'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <header>
+    <h1>🎯 Dart Tracker</h1>
+    <p class="tagline">Three throws a day. Most points by Friday keeps the trophy.</p>
+    <p class="card-name" id="cardName"></p>
+    <div class="header-actions">
+      <button type="button" id="openRules" class="btn-secondary">📋 Tournament rules</button>
+      <button type="button" id="logoutBtn" class="btn-secondary">Switch scorecard</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="card trophy-card" id="trophyCard">
+      <h2>🏆 Current trophy holder</h2>
+      <p id="trophyHolder" class="trophy-name">—</p>
+      <p id="trophyMeta" class="muted"></p>
+    </section>
+
+    <section class="card">
+      <div class="week-nav">
+        <button id="prevWeek" type="button" aria-label="Previous week">‹</button>
+        <h2 id="weekLabel">This week</h2>
+        <button id="nextWeek" type="button" aria-label="Next week">›</button>
+      </div>
+      <table class="leaderboard">
+        <thead>
+          <tr><th>#</th><th>Player</th><th>Days</th><th>Best day</th><th>Total</th></tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <tr><td colspan="5" class="muted">Loading…</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Enter a score</h2>
+      <form id="scoreForm" class="grid-form">
+        <label>Player
+          <select id="scorePlayer" required></select>
+        </label>
+        <div class="day-field">
+          <span class="day-field-label">Day <span id="dayFieldWeek" class="muted"></span></span>
+          <div id="daySelect" class="day-select" role="group" aria-label="Pick the day"></div>
+        </div>
+        <button type="button" id="openDartboard" class="btn-secondary board-btn">🎯 Pick on dartboard</button>
+        <div class="throws">
+          <label>Throw 1<input type="number" id="throw1" min="0" max="180" value="0" required /></label>
+          <label>Throw 2<input type="number" id="throw2" min="0" max="180" value="0" required /></label>
+          <label>Throw 3<input type="number" id="throw3" min="0" max="180" value="0" required /></label>
+        </div>
+        <p class="daytotal">Day total: <strong id="dayTotal">0</strong></p>
+        <button type="submit">Save score</button>
+        <p id="scoreMsg" class="msg"></p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Daily breakdown</h2>
+      <div class="table-scroll">
+        <table id="breakdownTable" class="breakdown">
+          <thead><tr><th>Player</th></tr></thead>
+          <tbody><tr><td class="muted">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Players</h2>
+      <form id="playerForm" class="inline-form">
+        <input type="text" id="playerName" placeholder="New player name" required maxlength="40" />
+        <button type="submit">Add player</button>
+      </form>
+      <ul id="playerList" class="player-list"></ul>
+      <p id="playerMsg" class="msg"></p>
+    </section>
+  </main>
+
+  <div class="modal" id="rulesModal" role="dialog" aria-modal="true" aria-label="Tournament rules" hidden>
+    <div class="modal-body">
+      <div class="modal-head">
+        <h2>📋 Tournament rules</h2>
+        <button type="button" class="modal-x" data-close aria-label="Close">×</button>
+      </div>
+      <ol class="rules-list">
+        <li>Three throws per day.</li>
+        <li>You may throw one day forward or one day back — but at most two days' worth in a single day (today&nbsp;+&nbsp;tomorrow, or today&nbsp;+&nbsp;yesterday).</li>
+        <li>If you throw for two days in one day, another player has to throw in between the two rounds.</li>
+        <li>You can't throw for Monday on Friday, or for Friday on Monday.</li>
+      </ol>
+      <p class="muted">The app flags a save that looks like it breaks these, but never blocks it — whether someone threw between two rounds is on you to sort out.</p>
+      <div class="modal-actions">
+        <button type="button" data-close class="btn-primary">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="dartModal" role="dialog" aria-modal="true" aria-label="Score on the dartboard" hidden>
+    <div class="modal-body">
+      <div class="modal-head">
+        <h2>Tap where each dart landed</h2>
+        <button type="button" class="modal-x" data-close aria-label="Close">×</button>
+      </div>
+      <p class="muted">Press and drag on the board — a magnifier follows your finger — then lift off to place the dart. Up to three.</p>
+      <div id="dartBoardWrap"></div>
+      <ul id="dartMarksList" class="dart-marks-list"></ul>
+      <div class="modal-actions">
+        <button type="button" id="dartUndo" class="btn-secondary">Undo last</button>
+        <button type="button" id="dartClear" class="btn-secondary">Clear</button>
+        <button type="button" id="dartApply" class="btn-primary">Use these scores</button>
+        <button type="button" data-close class="btn-secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
