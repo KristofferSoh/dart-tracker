@@ -41,10 +41,13 @@ $("createForm").addEventListener("submit", async (e) => {
   const { data, error } = await db.rpc("create_scorecard", {
     p_name: $("newName").value,
     p_password: $("newPw").value,
+    p_join_code: $("newCode").value,
   });
   if (error) {
     msg.className = "msg err";
-    msg.textContent = /password_taken/.test(error.message)
+    msg.textContent = /bad_join_code/.test(error.message)
+      ? "Wrong creation code."
+      : /password_taken/.test(error.message)
       ? "That password is already in use — pick another."
       : error.message;
     return;

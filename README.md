@@ -27,7 +27,10 @@ listed anywhere, so you can't browse to one; you need the password. There is no
 password reset.
 
 - **Create** (`login.html`): pick a name + password (min 4 chars, must be unique
-  across all scorecards). You're taken straight into the new, empty scorecard.
+  across all scorecards) and enter the shared **creation code** (a spam gate,
+  bcrypt-hashed in the sealed `app_config` table; rotate it with the
+  `set_create_code(current, new)` RPC). You're taken straight into the new,
+  empty scorecard.
 - **Open**: enter the password. Wrong password → "No scorecard with that
   password."
 - The tracker stores the scorecard id in `localStorage`; "Switch scorecard" in
